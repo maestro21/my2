@@ -1,0 +1,113 @@
+<?php //echo $do;
+switch($do){ 
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	//Initialization - installation
+	case 'ini': echo T('ini_msg');
+	break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Items list - default function	
+	case 'tag':
+	case 'search':
+	case 'items' :  ?>
+
+	<?php  foreach ($data as $row){ $_id = $row['id']; unset($row['id']); ?>
+		<div class="subhdr">	
+			<div style="float:right;padding:4px;">
+				<?=fDate($row['date']);?>				
+				<a href="<?=$pre.$class?>/item/<?=$id;?>"><?=T('edit');?></a>	
+				<a href="#" onclick="conf('<?=$pre.$class?>/del/<?=$id;?>')"><?=T('del');?></a>
+			</div>
+		<center><h2><a href="<?=$pre.$class?>/view/<?=$_id;?>"><?=$row['label'];?></a></h2> </center>
+		</div>	
+		<p>
+			<?=$row['text'];?>
+		</p>		
+		<hr>
+		<p class="tags"> <? $_tags = split(',',$row['tags']); foreach ($_tags as $tag){ ?>
+			<a href="<?=$pre.$class;?>/tag/<?=$tags[$tag]['url'];?>"><?=$tags[$tag]['name'];?></a><? } ?>
+		</p>
+	<?}?> 
+
+		<center>
+	<?php if($pages>1) for($i=1;$i<=$pages;$i++){ ?>
+		<?if($do=='tag'){?>
+			<a href="<?=$pre.$class?>/tag/<?=$id;?>/<?=$i;?>" class="pagination"><?=$i;?></a>
+		<?}else{ ?>
+			<a href="<?=$pre.$class?>/<?=$do;?>/<?=$i;?>/<?=$search;?>" class="pagination"><?=$i;?></a>
+		<?}?>
+	<?}?>	
+	</center>
+	<?php break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Add\Edit  item
+	case 'item' : ?>
+		<form method="POST" action="<?=$pre.$class?>/save">
+		<input type="hidden" name="id" id="id" value="<?=$id;?>">
+			<table>
+			<?php   unset($data[0]); //inspect($data);  inspect($fields);
+				echo drawForm($fields,$data,$options); 
+			?>
+				<tr>
+					<td colspan="2">
+						<input type="submit">
+					</td>
+				</tr>
+			</table>	
+		</form>
+		<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">
+bkLib.onDomLoaded(function() {
+ new nicEditor({fullPanel : true,maxHeight : 300}).panelInstance('text');
+ });
+</script>
+						
+	<?php break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Save
+	case 'save' : echo T('save_msg'); redirect($pre.$class.'/item/'.$id,3);
+	break;
+		
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Delete
+	case 'del' : echo T('del_msg'); redirect($pre.$class.'/items',3);
+	break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	// View
+	case 'view' ://inspect($data); ?> 
+		<div style="width:80%;margin-left:10%;">
+			<div class="subhdr">	
+				<div style="float:right;padding:4px;">
+					<?=fDate($data['date']);?>
+				
+				</div>
+			<center><h2><?=$data['label'];?></h2> </center>
+			</div>	
+			<p>
+				<?=$data['text'];?>
+			</p>
+		</div>
+		 <?php
+	break;			
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	//Error
+	default : ?>	
+		<h2>404 <?=T('not found');?></h2>	
+<?php break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+ } ?> 	
+ 

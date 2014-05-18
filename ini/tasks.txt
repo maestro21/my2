@@ -1,0 +1,5 @@
+pid int select
+label text text
+info text textarea
+status int select
+created date date

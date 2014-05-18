@@ -1,0 +1,151 @@
+<?php switch($do){ 
+	case 'view':
+		 $pre .= 'pages/';
+		//inspect($data);?>
+		<div><?=$data['text'];?></div>
+	</div>
+	
+	<div class="pagemenu" id="pagemenu">
+		<div class="pm">
+		<?  foreach($data['tree'] as $menu){ 
+			if ($menu['id'] == $id) { ?>
+				<a href="<?=$pre.$menu['url'];?>" class="pm_selected"><?=$data['title'];?></a>
+				<? foreach ($data['children'] as $child) { ?>
+					<a href="<?=$pre.$data['url'].'/'.$child['url'];?>" class="pm_children"><?=$child['name'];?></a>
+				<? } ?>	
+				
+			<? } elseif($menu['id'] == $data['pathto'][0]['id']) { ?>
+				<a href="<?=$pre.$menu['url'];?>" class="pm_first"><?=$menu['title'];?></a>
+			<?
+				//inspect($data['pathto']);	
+				$_p = $data['pathto'][0]['url'].'/';
+				unset($data['pathto'][0]);
+				foreach ($data['pathto'] as $p) { $_p .= $p['url'].'/'; ?>
+					 <a href="<?=$pre.$_p;?>" class="pm_sub"><?=$p['title'];?></a>
+				<? } ?>
+				
+				<a href="<?=$pre.$_p.$data['url'];?>" class="pm_sub pm_selected"><?=$data['title'];?></a>
+				
+				<? foreach ($data['children'] as $k => $v) { ?>
+					<a href="<?=$pre.$_p.$data['url'].'/'.$v['url'];?>" class="pm_children"><?=$v['title'];?></a>
+				<? } ?>
+				
+			<? } else {?>				
+				<a href="<?=$pre.$menu['url'];?>" class="pm_first"><?=$menu['title'];?></a>
+		<? } 
+		} 		
+		?>
+		
+		</div>
+	</div>
+	<script language="javascript">
+		$("pagemenu").insertBefore($("wrap"));
+	</script>
+	
+	<? break;
+	default:
+		include('default.html');
+	break;
+	
+	/////////////////////////////////////
+	
+	case 'items': ?>
+	<b><?=T('langs');?></b> :
+	<?php foreach ($langs as $lang) { ?>
+		<a href="<?=$pre;?>pages/items/<?=$lang['abbr'];?>"><?=$lang['name'];?></a> |
+	<? } ?>
+	
+	<?php
+	
+	function _treeDraw($data){
+		$ret = "";
+		foreach ($data as $k => $row){ 
+			$id = $row['id'];
+		
+			foreach ($row['children'] as $kk => $vv) {
+				$row['children'][$kk]['preurl'] = $row['preurl'] . $row['url'] . "/";
+			}
+			
+			$ret .= "<div style='padding-left:20px'>
+						<a href='".$pre.$row['preurl'].$row['url']."' target='_blank'>".$row['title']."</a>".
+						
+						"<a href=\"javascript:void(0);\" onclick=\"conf('{$pre}del/$id')\">".T('del')."</a>
+						 <a href=\"{$pre}item/$id\">".T('edit')."</a>".
+						
+						_treeDraw($row['children']) .
+					"</div>";
+		}
+		return $ret;
+	}
+	
+	echo _treeDraw($data);
+	/*
+	echo treeDraw($data,
+		"<div style='padding-left:20px'> 
+			<a href='".$pre."%preurl%url' target='_blank'>%name</a>
+			%children
+		</div>",
+		'if(!isset($row[\'preurl\'))
+			$row[\'preurl\'] = ""; 
+		foreach ($row[\'children\'] as $children)
+			$children[\'preurl\'] = $row[\'preurl\'] . $url . "/";'
+	);/**/
+	
+	 /*function _treeDraw($tree) {  
+		foreach ($tree as $k=>$v) { 
+			echo "<div style='padding-right:20px'>";
+			echo $v['name'];
+			treeDraw($v['children']);
+			echo "</div>";
+		} 
+	}
+	_treeDraw($data);*/?>
+	
+	
+	<? break;
+	
+	/////////////////////////////////////
+	
+	case 'tags': ?>
+	<a href="<?=$pre;?>filemanager/metatags.php" target="_blank"><?=T('edit');?></a>
+	<?
+	$_forums = DBall("SELECT * FROM forumthreads");
+	$forums = array();
+	foreach($_forums as $forum) {
+		$forums[$forum['id']] = $forum['name'];	
+	}
+
+	$_blogs = DBall("SELECT * FROM blogs");
+	$blogs = array();
+	foreach($_blogs as $blog) {
+		$blogs[$blog['id']] = $blog['name'];	
+	}
+
+	foreach ($data as $k => $tag){
+		echo "<p><b>$k - ".$tag['name']."</b> - ".$tag['desc'];
+		foreach ($tag['actions'] as $action){
+			switch($action['action']){
+				case 'blog_add':
+					echo "<br>* ".T('creating new post in blog')." <b>".$blogs[$action['pid']]."</b> ";					
+				break;
+				
+				case 'blog_up':
+					echo "<br>* ".T('updating post in blog')." <b>".$blogs[$action['pid']]."</b> ". T('with condition'). '<b>' .$action['cond'] .'</b>';
+				break;
+
+				case 'forum_add':
+					echo "<br>* ".T('adding comment in forum thread')." <b>".$forums[$action['pid']]."</b> ";
+				break;
+				
+				case 'forum_up':
+					echo "<br>* ".T('updating comment in forum thread')." <b>".$forums[$action['pid']]."</b> ". T('with condition'). '<b>' .$action['cond'] .'</b>';
+				break;
+			}
+		}
+		if(isset($tag['addlink']) && $tag['addlink'] == false) echo "<br>* ".T('link dont save');
+		echo "</p>";
+	}
+
+	break;
+
+}?>

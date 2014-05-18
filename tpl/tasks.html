@@ -1,0 +1,109 @@
+<style>
+.urgent{
+	font-weight:bold;
+	color:red;
+	font-size:21;
+}
+
+.closed{
+	text-decoration: line-through;
+	font-style:italic;
+	font-weight:normal !important;
+}
+
+.open{
+	font-weight:bold;	
+}
+</style>
+
+<hr>
+<?php switch($do){ 
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	//Initialization - installation
+	case 'ini': echo T('ini_msg');
+	break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Items list - default function	
+	case 'items' : ?>
+		<h3> 
+	<?php foreach ($projects as $k=>$project){ ?>
+		<a href="<?=$pre?>filter/project/<?=$k;?>"><?=$project;?></a>
+	<? }?></h3>
+	<table>
+	<?php 
+		//$statuses = Array( 'closed', 'open', 'urgent');
+		foreach ($data as $row){ ?>
+		<tr>
+		<td>
+			<a class="<?=$statuses[$row['status']];?>" onmouseover="hideUnhide('txt_<?=$row['id'];?>')"; onmouseout="hideUnhide('txt_<?=$row['id'];?>')"; href="<?=$pre.$class?>/item/<?=$row['id'];?>">#<?=$row['id'].' '.$row['label'];?></a>
+			<?=fDate($row['created']);?> <a href="javascript:void(0);" onclick="conf('<?=$pre.$class?>/del/<?=$id;?>')"><?=T('del');?></a> <br>
+			<div id="txt_<?=$row['id'];?>" style="display:none;"><?=$row['info'];?></div>	
+		</td>
+		</tr>		
+	<?}?> 
+	</table>
+	
+	<?php if($pages>1) for($i=1;$i<=$pages;$i++){ ?>
+		<a href="<?=$pre.$class?>/items/<?=$i;?>/<?=$search;?>"><?=$i;?></a>
+	<?}?>	
+	<?php break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Add\Edit  item
+	case 'item' : ?>
+		<form method="POST" action="<?=$pre.$class?>/save">
+		<input type="hidden" name="id" id="id" value="<?=$id;?>">
+			<table>
+			<?php   unset($data[0]); //inspect($data);  inspect($fields);
+				echo drawForm($fields,$data,$options); 
+			?>
+				<tr>
+					<td colspan="2">
+						<input type="submit">
+					</td>
+				</tr>
+			</table>	
+		</form>
+	<?php break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Save
+	case 'save' : echo T('save_msg'); redirect($pre.$class.'/item/'.$id,2);
+	break;
+		
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Delete
+	case 'del' : echo T('del_msg'); redirect($pre.$class.'/items',2);
+	break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	// View
+	case 'view' :  ?> <table>
+		<?php foreach ($data as $k => $v){ ?>
+			<tr>
+				<td><?=T($k);?></td>
+				<td><?=(isset($options[$k])?T($options[$k][$v]):$v);?></td>		
+			</tr>	
+		<?php	
+		} ?>
+		</table> <?php
+	break;			
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	//Error
+	default : ?>	
+		<h2>404 <?=T('not found');?></h2>	
+<?php break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+ } ?> 	

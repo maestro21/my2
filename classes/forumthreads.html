@@ -1,0 +1,49 @@
+<?php switch($do){
+
+	case 'items' : ?>
+		<h2><a href="<?=$pre.$class?>/newtopic/<?=$id;?>"><?=T('new topic');?></a></h2>
+		<table cellpadding=0 cellspacing=0 class="forum">
+		<tr class="thead">
+				<td><?=T('threads');?></td>
+				<td class="mid"><?=T('replies');?></td>
+				<td class="mid"><?=T('views');?></td>
+				<td><?=T('author');?></td>
+				<td><?=T('last comment');?></td>
+				<?php if(superAdmin()){ ?><td><?=T('options');?></td><? } ?>
+
+		</tr>
+		
+		<? foreach (@$threads as $row){ $_id = $row['id'];	?>
+		<tr>
+			<td class="forumname"><a href="<?=BASE_PATH;?>forums/view/<?=$_id;?>"><?=$row['name'];?></a></td>
+			<td class="mid"><?=$row['comments'];?></td>
+			<td class="mid"><?=$row['views'];?></td>
+			<td class="mid"><?=$row['lastauthor'];?></td>
+			<td class="sml"><nobr><?=$row['lastcomment'];?></nobr><br><?=$row['lastauthor'];?></td>
+			<?php if(superAdmin()){ ?>
+				<td>
+					<a href="<?=$pre.$class?>/item/<?=$_id;?>"><?=T('edit');?></a>
+					<a href="javascript:void(0);" onclick="conf('<?=$pre.$class?>/del/<?=$_id;?>')"><?=T('del');?></a>	
+				</td>
+			<?} ?>
+		</tr>		
+		<? } ?>
+		
+	</table>
+	<?php
+	break;	
+	
+	case 'newtopic': $fid = $id;
+	case 'item':?>
+	
+	
+	
+	
+	<?php
+	break;
+	
+	
+	default : include('default.html');
+	break;	
+	
+} ?>

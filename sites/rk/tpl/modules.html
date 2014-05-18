@@ -1,0 +1,44 @@
+<?php switch($do){ 
+
+
+	// Items list - default function	
+case 'items' : ?>
+	<table cellpadding=0 cellspacing=0>
+	<thead>
+	<tr>
+		<?php //inspect($fields); 
+		foreach ($fields as $k=>$v){?>
+			<td><a href="<?=$pre?>filter/sort_<?=$class;?>/<?=$k.'_'.getFilterState($class,$k);?>"><?=T($k);?></a><?=filterImg($class,$k);?></td>
+		<? }?>
+		<td><?=T('options');?></td>
+	</tr>
+	</thead>
+	<?php  foreach ($data as $row){ unset($row['fields']);?>
+		<tr>
+		<?php
+		$id = $row['id']; unset($row['id']); 
+		foreach($row as $k=>$v){
+			echo "<td>".(isset($options[$k][$v])?T($options[$k][$v]):$v)."</td>";	
+		}?>
+		<td width=150>			
+			<a href="<?=$pre.$class?>/item/<?=$id;?>"><?=T('edit');?></a>
+			<a href="#" onclick="conf('<?=$pre.$class?>/del/<?=$id;?>')"><?=T('del');?></a>
+			<a href="<?=$pre.$row['url'];?>/ini"><?=T('ini');?></a>
+		</td>
+		</tr>		
+	<?}?> 
+	</table>
+	<br>
+	<?php if($pages>1) for($i=1;$i<=$pages;$i++){ ?>
+		<a href="<?=$pre.$class?>/items/<?=$i;?>/<?=$search;?>" class="pagination"><?=$i;?></a>
+	<?}?>	
+	<?php break;
+
+
+	//Error
+	default : include('default.html');
+
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+ } ?> 	

@@ -1,0 +1,5 @@
+label text text
+text text textarea
+date date date
+blog_id int select
+tags none checkboxes

@@ -1,0 +1,8 @@
+name text text
+surname text text
+dob date date
+sex int radio
+lvl int text
+money float text
+descr text textarea
+country int select

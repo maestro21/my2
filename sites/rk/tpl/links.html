@@ -1,0 +1,134 @@
+<?php switch($do){ 
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	//Initialization - installation
+	case 'ini': echo T('ini_msg');
+	break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Items list - default function	
+	case 'search' :
+	case 'items' : ?> | <? //inspect($tagcloud); 
+
+	
+	function getFsize($tag){
+		$i++;
+		$sizes = array( 
+					100 => 30,
+					50 => 26,
+					25 => 22,
+					15 => 18,
+					6 => 14,
+					0 => 12,
+				);
+		foreach ($sizes as $k=>$v){
+			if($k<$tag) return $v;
+		}		
+	}
+	
+	foreach (@$tagcloud as $tag){?> 
+		<a href="<?=$pre.$class."/items/1/".$tag['tag'];?>" style="font-size:<?=getFsize($tag['total']);?> !important"><?=$tag['tag'];?>(<?=$tag['total'];?>)</a>  |
+	<? } ?> 
+	<hr>
+	<table cellpadding=3 cellspacing=0>
+	<? foreach ($data as $row){?>
+		<tr style="border-bottom:1px black solid">
+			<td><? $tags = split(',',$row['tags']);  $row['url'] = str_replace("www.","",str_replace("http://","",$row['url']));
+				foreach ($tags as $tag){ ?>
+				 <a href="<?=$pre.$class."/items/1/$tag";?>"><?=$tag;?></a>
+				<? } ?>
+			</td>
+			<td><nobr>
+				<?=fdate($row['date']);?>
+			</td></nobr>
+			<td>
+				 <A href="http://<?=$row['url'];?>" target="_blank"><?=$row['url']. ' - ' . $row['label'];?></a>
+				
+			</td>
+			<td><nobr>
+				<A href="<?=$pre.$class."/item/".$row['id'];?>"><?=T('edit');?></a>
+				<a href="#" onclick="conf('<?=$pre.$class;?>/del/<?=$row['id'];?>.')"><?=T('del');?></a></nobr>
+			</td>
+		</tr>	
+	<? }  ?>
+	</table>
+	<br>
+		<center>
+	<?php if($pages>1) for($i=1;$i<=$pages;$i++){ ?>
+		<a href="<?=$pre.$class?>/items/<?=$i;?>/<?=$search;?>" class="pagination"><?=$i;?></a>
+	<?}?>	
+	</center>
+	<?	//$data['date'] = fDate($data['date']);
+		/*echo "<ul>".treeDraw($data,
+		
+			'<li>
+				<A href="http://$url" target="_blank">$label</a>
+				<A href="'.$pre.$class.'/item/$id">[y]</a>
+				<a href="#" onclick="conf(\''.$pre.$class.'/del/'.$id.'\')">'.T('del').'</a>
+				$date
+				<ul>
+					$children
+				</ul>
+			</li>'
+			
+			);*/
+		
+		break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Add\Edit  item
+	case 'item' : ?>
+		<form method="POST" action="<?=$pre.$class?>/save">
+		<input type="hidden" name="id" id="id" value="<?=$id;?>">
+			<table>
+			<?php   unset($data[0]); //inspect($data);  inspect($fields);
+				echo drawForm($fields,$data,$options); 
+			?>
+				<tr>
+					<td colspan="2">
+						<input type="submit">
+					</td>
+				</tr>
+			</table>	
+		</form>
+	<?php break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Save
+	case 'save' : echo T('save_msg'); redirect($pre.$class.'/item/'.$id,2);
+	break;
+		
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Delete
+	case 'del' : echo T('del_msg'); redirect($pre.$class.'/items',2);
+	break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	// View
+	case 'view' :  ?> <table>
+		<?php foreach ($data as $k => $v){ ?>
+			<tr>
+				<td><?=T($k);?></td>
+				<td><?=(isset($options[$k])?T($options[$k][$v]):$v);?></td>		
+			</tr>	
+		<?php	
+		} ?>
+		</table> <?php
+	break;			
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	//Error
+	default : ?>	
+		<h2>404 <?=T('not found');?></h2>	
+<?php break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+ } ?> 	

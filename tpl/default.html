@@ -1,0 +1,83 @@
+<?php switch($do){ 
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	//Initialization - installation
+	case 'ini': echo T('ini_msg');
+	break;
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////	
+	// Items list - default function	
+	case 'search' :
+	case 'items' : ?>
+	<table cellpadding=0 cellspacing=0>
+	<tr class="thead">
+		<?php foreach ($fields as $k=>$v){?>
+			<td><a href="<?=$pre?>filter/sort_<?=$class;?>/<?=$k.'_'.getFilterState($class,$k);?>"><?=T($k);?></a><?=filterImg($class,$k);?></td>
+		<? }?>
+		<td><?=T('options');?></td>
+	</tr>
+	<?php  foreach (@$data as $row){ ?>
+		<tr>
+		<?php
+		$id = $row['id']; unset($row['id']); 
+		foreach($row as $k=>$v){
+			echo "<td>".(isset($options[$k][$v])?T($options[$k][$v]):$v)."</td>";	
+		}?>
+		<td width=150>
+			<a href="javascript:void(0);" onclick="conf('<?=$pre.$class?>/del/<?=$id;?>')"><?=T('del');?></a>
+			<? foreach ($buttons['table'] as $url => $text) { ?>
+				<a href="<?=$pre.$class.'/'.str_replace('{id}',$id,$url);?>"><?=T($text);?></a>
+			<? } ?>
+			<!--<a href="<?=$pre.$class?>/item/<?=$id;?>"><?=T('edit');?></a>
+			<a href="<?=$pre.$class?>/view/<?=$id;?>"><?=T('view');?></a>-->		</td>		</tr>
+	<?}?> 
+	</table>	
+	<center>
+	<?php if($pages>1) for($i=1;$i<=$pages;$i++){ ?>
+		<a href="<?=$pre.$class?>/items/<?=$i;?>/<?=$search;?>" class="pagination"><?=$i;?></a>
+	<?}?>
+	</center>
+	<?php break;	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////	
+	// Add\Edit  item	case 'item' : $formid = $class . '_form_item_' . $id; ?>		<form method="POST" id="<?=$formid;?>" action="<?=$pre.$class?>/save">		<input type="hidden" name="id" id="id" value="<?=$id;?>">			<table cellpadding=0 cellspacing=0>			<?php   if(isset($data[0])) unset($data[0]); //inspect($data);  inspect($fields); inspect($options);				echo drawForm($fields,$data,$options); 			?>				<tr>					<td colspan="2" align="center">
+						<div class="okmsg" id="<?=$formid;?>_savemsg"><?=T('save_msg');?></div>
+							<button class="btn" onclick="saveForm('<?=$formid;?>','<?=$pre.$class?>/save'<?=($id>0?'':',1');?>);"><img src="<?=BASE_PATH;?>img/save_big.png" align="absmiddle"> <?=T('save');?></button>
+										<? /*if($id>0) { ?>							<div class="okmsg" id="<?=$formid;?>_savemsg"><?=T('save_msg');?></div>							<button class="btn" onclick="saveForm('<?=$formid;?>','<?=$pre.$class?>/save');"><img src="<?=BASE_PATH;?>img/save_big.png" align="absmiddle"> <?=T('save');?></button>						<? } else { ?>							<button class="btn" onclick="this.form.submit()"><img src="<?=BASE_PATH;?>img/save_big.png" align="absmiddle"> <?=T('save');?></button>						<? }*/ ?>					</td>				</tr>			</table>			</form>		<script src="<?=$pre;?>js/savectrls.js" type="text/javascript"></script>	<script>function saveFn(){ saveForm('<?=$formid;?>','<?=$pre.$class?>/save'); }</script>	
+	<?php break;
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	// Save
+	case 'save' : 
+				echo "<center><h4>".T('save_msg')."</h4></center>";
+				//if(isset($data['redirect'])) redirect($data['redirect'],1);
+				redirect($pre.$class.'/item/'.$id,1);
+	break;		
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////	
+	// Delete
+	case 'del' : 
+		echo "<center><h4>".T('del_msg')."</h4></center>";
+		if(isset($data['redirect'])) redirect($data['redirect'],1);
+		redirect($pre.$class.'/items',1);
+	break;
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	// View
+	case 'view' :  ?> <table>
+		<?php foreach ($data as $k => $v){ ?>
+			<tr>
+				<td><?=T($k);?></td>
+				<td><?=(isset($options[$k])?T($options[$k][$v]):$v);?></td>	
+			</tr>
+		<?php	
+		} ?>
+		</table> <?php
+	break;		
+	case 'msg':
+		if(isset($data['msg'])) echo "<center><h4>".T($data['msg'])."</h4></center>";
+		if(isset($data['redirect'])) redirect($data['redirect'],1);
+	break;	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	//Error
+	default : ?>
+		<h2>404 <?=T('not found');?></h2>	
+<?php break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+ } ?> 	

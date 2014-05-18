@@ -1,0 +1,50 @@
+		<div class="adminbar"> 
+			<div class="wrap">
+				<div class="admdropdown" style="width:50px">
+					<a href="<?=$path;?>"><img src="<?=BASE_PATH;?>img/logosml.png"></a>
+				</div>
+				
+				<div class="admdropdown" style="width:100px">
+					<a onclick="showHide('mainmenu')" href="javascript:void(0);"><img src="<?=$path;?>img/arr.png"> <?=T('modules');?></a>
+					<div class="dropdownmenu" id="mainmenu">
+					 <!--<a href="<?=$path;?>install.php"><?=T('install');?></a><br> -->
+					<?php foreach ($modules as $module){ ?>
+						<a href="<?=$path.$module;?>"><?=T(trim($module));?></a>
+					<?}?>
+					</div>
+				</div>
+							
+				<div class="admdropdown" style="width:600px">
+					&rarr; <a href="<?=$path.$class?>"><?=T($class);?></a>
+					<!--	<a href="javascript:void(0);" onclick="conf('<?=$pre.$class?>/ini')"><?=T('ini');?></a> &nbsp; -->
+						<? foreach ($buttons['admin'] as $url => $text) { ?>
+							<a href="<?=BASE_PATH.$class.'/'.$url?>"><?=T($text);?></a>
+						<? } ?>
+						<!--<a href="<?=BASE_PATH.$class?>/items"><?=T('list');?></a>  &nbsp; 
+						<a href="<?=BASE_PATH.$class?>/item/<?=$id;?>"><?=T('add');?></a> -->
+						<input type="text" id="search" name="search" value="<?=$search;?>">
+						<button class="btn search"  onclick="doSearch('<?=$path.$class?>')"><?=T('search');?></button>
+				</div>
+				
+				<div class="admdropdown" style="width:100px">
+					<a onclick="showHide('blogsmenu')" href="javascript:void(0);"><img src="<?=$path;?>img/arr.png"> <?=T('blogs');?></a>
+					<div class="dropdownmenu" id="blogsmenu">
+					<a href="<?=$path;?>records"><?=T('records');?></a>
+					<?php foreach ($blogs as $blog){ ?>
+						<a href="<?=$path.$blog['url'];?>"><?=T(trim($blog['name']));?></a>
+					<?}?>
+					</div>
+				</div>
+				
+				<div class="admdropdown" style="width:150px;">
+					<a href="javascript:void(0);" onclick="showHide('dropdownmenu')"><img src="<?=BASE_PATH;?>img/arr.png" align="absmiddle">Маэстро</a><br>
+					<div  class="dropdownmenu" id="dropdownmenu">
+						<a href="<?=BASE_PATH;?>users/logout"><?=T('exit');?></a>	
+						<?php foreach ($langs as $lang){ ?>
+							<a href="<?=$path;?>filter/lang/<?=$lang['abbr'];?>"><?=$lang['name'];?></a>	
+						<?}?>
+					</div>
+				</div>
+				
+			</div>
+		</div>	

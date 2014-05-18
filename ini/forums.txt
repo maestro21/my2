@@ -1,0 +1,7 @@
+pid id select
+name text text
+themes int none
+msgs int none
+lastmsg time none
+lastauthor id none
+order_id int none

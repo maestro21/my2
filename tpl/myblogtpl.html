@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+</head>
+<style>
+<?=G('myblogcss');?>
+</style>
+<body>
+	<img src="<?=$pre;?>background2.jpg" alt="background image" id="bg" />
+		
+	<div id="content">	
+			<div class="top">
+				<?=html_entity_decode(G('myblogdesc'));?>
+			</div>
+			<?php // inspect($data); die(); 
+
+			switch($do){
+			case 'tag':
+			case 'items':
+			foreach (@$data as $row){ $id = $row['id']; unset($row['id']); ?>
+			<div class="post">	
+				<div class="subhdr">	
+					<div style="float:right;padding:4px;">
+						<b><?=fDate($row['date']);?></b>				
+					</div>
+				<center><h2><a href="<?=$pre?>view/<?=$id;?>"><?=$row['label'];?></a></h2> </center>
+				</div>	
+				<p>
+					<?=html_entity_decode($row['text']);?>
+				</p>		
+		
+					<i><?=T('tags');?> :
+					<? $tags = split(',',$row['tags']);
+					foreach ($tags as $tag){
+					?>
+						<a href="<?=$pre?>tag/<?=$tag?>"><?=T($tag);?></a> 
+					<?
+					} ?> </i>
+				</p>
+				</div>
+			<?} 
+			break;
+			case 'view':  $row = $data; // inspect($row);?>
+					<div class="post">	
+				<div class="subhdr">	
+					<div style="float:right;padding:4px;">
+						<b><?=fDate($row['date']);?></b>				
+					</div>
+				<center><h2><a href="<?=$pre?>view/<?=$id;?>"><?=$row['label'];?></a></h2> </center>
+				</div>	
+				<p>
+					<?=html_entity_decode($row['text']);?>
+				</p>		
+		
+					<i><?=T('tags');?> :
+					<? $tags = split(',',$row['tags']);
+					foreach ($tags as $tag){
+					?>
+						<a href="<?=$pre?>tag/<?=$tag?>"><?=T($tag);?></a> 
+					<?
+					} ?> </i>
+				</p>
+				</div>
+				<? break; 
+				} ?>
+			
+		<?php if($pages>1) for($i=1;$i<=$pages;$i++){ ?>
+			<a href="<?=$pre?>blog/items/<?=$i;?>/<?=$search;?>"><?=$i;?></a>
+		<?}?>
+			
+	</div>
+</body>	
+</html>	

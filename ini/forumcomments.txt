@@ -1,0 +1,4 @@
+tid int hidden
+uid int hidden
+text text bbcode
+time date date

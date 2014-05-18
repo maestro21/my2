@@ -1,0 +1,73 @@
+<?php switch($do){ 
+	case 'login':  ?>
+	<center>
+	<form id="loginForm" method="POST" action="<?=BASE_PATH;?>users/login">
+		<? if (isset($data['msg']) ){ ?> <h3><?=T($data['msg']);?></h3> <? } ?>
+		<table class="login" border=0 cellspacing=0 cellpadding=0>
+
+			<tr class="thead">
+				<td colspan=2  class="top">
+					<h2><?=T('login');?></h2>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<?=T('pass');?>
+				</td>
+				<td>
+					<input name="form[pass]" type="password">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="middle"  class="bottom">
+					<button class="btn" onclick="this.form.submit()"><img src="<?=BASE_PATH;?>img/login.png" align="absmiddle"><?=T('login');?></button>
+				</td>
+			</tr>
+
+		</table>
+	</form>
+	</center>
+	<? break;
+	
+	case 'recover' : ?>
+		<center>
+		<form id="loginForm" method="POST" action="<?=BASE_PATH;?>users/recover">
+		<? if (isset($data['msg']) ){ ?> <h3><?=T($data['msg']);?></h3> <? } ?>
+		<table class="login" border=0 cellspacing=0 cellpadding=0>
+
+			<thead>
+			<tr>
+				<td colspan=2  class="top">
+					<h2><?=T('passrecover');?></h2>
+				</td>
+			</tr>	
+			</thead>
+			<tbody>
+			
+			<tr>
+				<td>
+					<span class="sml"><?=T('email');?>
+				</td>
+				<td>	
+					<input name="form[email]">
+				</td>
+
+			</tr>
+			<tr>
+				<td colspan="2" class="bottom">
+					<button class="btn" onclick="this.form.submit()"><img src="<?=BASE_PATH;?>img/save_big.png" align="absmiddle"> <?=T('recover');?></button>
+					
+				</td>
+			</tr>
+			</tbody>
+		</table>		
+		</form>
+		<center>
+	<? break;
+
+	
+	default :
+		include('default.html');
+	break;	
+} ?>	

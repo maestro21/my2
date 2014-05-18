@@ -1,0 +1,7 @@
+fid int select
+name text text
+text text bbcode
+author int none
+created date date
+lastcomment date none
+status int select

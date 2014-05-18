@@ -1,0 +1,67 @@
+
+sitename =  Коралловый Клуб в Гамбурге
+pages = Страницы
+news = Новости
+404 page not found = Ошибка 404 - страница не найдена
+
+logout = Выйти
+control panel = Панель управления
+modules = Модули
+add content = Добавить
+create new page = Создать новую страницу
+create new news item = Написать новость
+
+
+list of pages = Список страниц
+list of products = Список продуктов
+edit page = Редактировать страницу
+add new = Добавить
+url = URL
+title = Название
+isactive = Публична?
+options = Возможности
+edit = редактировать
+del = удалить
+status = Статус страницы
+public = Опубликован
+text =  Текст
+lang = Язык
+yes = Да
+no = Нет
+shorttext = Короткий текст
+time = Время
+picture = Картинка
+full description = Полное описание
+
+
+read more = Читать далее
+
+list of news = Список новостей
+login = Вход
+pass = Пароль
+
+dev = Разработано у
+hidden = Скрытая
+visible = Опубликована
+main menu = В главном меню
+first page = Первая страница
+products = Продукты
+add new product = Добавить продукт
+
+name surname = Имя и фамилия
+dob = Дата рождения
+address phone = Адрес проживания и контактный телефон
+youremail = Адрес проживания и контактный телефон
+product list =  Список продукции (название, количество)
+additional info = Дополнительная информация (вопросы, пожелания)
+
+
+orders = Заказы
+list of orders = Список заказов
+email = Электронный адрес
+name = Название
+submitted = Время заказа
+edit orders = Редактировать заказ
+
+order submitted = Спасибо за Ваш заказ!
+order submitted text = Ваш заказ успешно принят! Спасибо за Ваш заказ!

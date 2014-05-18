@@ -1,0 +1,53 @@
+<?php switch($do){
+
+	case 'view' : 
+		$forums = @$data['forums'];
+		$threads = @$data['threads'];
+		//drawing forums
+		if(sizeof($forums) > 0 ) {
+		?>
+			<table cellpadding=0 cellspacing=0 class="forum">
+				<tr class="thead">
+						<td><?=T('name');?></td>
+						<td class="mid"><?=T('topics');?></td>
+						<td class="mid"><?=T('msgs');?></td>
+						<td><?=T('last comment');?></td>
+						<?php if(superAdmin()){ ?><td><?=T('options');?></td><? } ?>
+
+				</tr>
+				
+				<? foreach (@$forums as $row){ $_id = $row['id'];	?>
+				<tr>
+					<td class="forumname"><a href="<?=BASE_PATH;?>forums/view/<?=$_id;?>"><?=$row['name'];?></a></td>
+					<td class="mid"><?=$row['themes'];?></td>
+					<td class="mid"><?=$row['msgs'];?></td>
+					<td class="mid sml">
+						<?php if($row['lastcomment'] != '') { ?>
+							<?=fDate($row['lastcomment']);?><!--<br><?=T('by user');?> <a href="<?=BASE_PATH;?>users/<?=$row['lastauthor'];?>"><?=$row['lastauthorname'];?>-->
+						<? } ?>
+					</td>
+					<?php if(superAdmin()){ ?>
+						<td>
+							<a href="<?=$pre.$class?>/item/<?=$_id;?>"><?=T('edit');?></a>
+							<a href="javascript:void(0);" onclick="conf('<?=$pre.$class?>/del/<?=$_id;?>')"><?=T('del');?></a>	
+						</td>
+					<?} ?>
+				</tr>
+				<? } ?>
+			</table>
+	 <? } 	 
+	 
+	 //drawing threads
+	 if($data['threadsallow']) { 
+		$threads = loadClass('forumthreads','forumthreads');
+		$threads->fid = $id; 
+		$threads->do = 'items';		
+		$threads->preParse();
+		echo $threads->parse();		
+	} 
+	
+	break;
+	
+	default : include('default.html');
+	break;	
+} ?>

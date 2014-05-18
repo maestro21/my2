@@ -1,0 +1,42 @@
+
+sitename =  Coral Club in Hamburg
+pages = Pages
+news = News
+404 page not found = 404 - page not found
+
+logout = Выйти
+control panel = Control panel
+modules = Модули
+add content = Добавить
+create new page = Создать новую страницу
+create new news item = Написать новость
+
+list of pages = Список страниц
+edit page = Редактировать страницу
+add new = Добавить
+url = URL
+title = Название
+isactive = Публична?
+options = Возможности
+edit = редактировать
+del = удалить
+public = Статус страницы
+text =  Текст
+lang = Язык
+yes = Да
+no = Нет
+shorttext = Короткий текст
+time = Время
+
+
+read more = Read more
+
+list of news = Список новостей
+login = Вход
+pass = Пароль
+
+dev = Developed by
+hidden = Скрытая
+visible = Опубликована
+main menu = В главном меню
+first page = Первая страница

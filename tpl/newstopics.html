@@ -1,0 +1,16 @@
+<?php switch($do){ 
+	case 'importtags': ?><center>
+		<form method="POST" action="<?=$pre.$class?>/savetags">
+		<h2>Импорт тем</h2>
+		<textarea name="tags" rows=30 cols=40></textarea><br>
+		<button class="btn" onclick="this.form.submit()"><img src="<?=BASE_PATH;?>img/import.png" align="absmiddle"> Импортировать</button>
+		</form>
+		</center>
+	<?
+		
+	break;
+	default:
+		include('default.html');
+	break;
+
+}?>

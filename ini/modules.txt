@@ -1,0 +1,2 @@
+url text text
+isactive int checkbox

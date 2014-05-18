@@ -1,0 +1,2 @@
+path text text
+content text textarea

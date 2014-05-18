@@ -1,0 +1,12 @@
+text
+date
+int
+float
+
+hidden
+text
+pass
+textarea
+checkbox
+select - массив значений
+radio  - массив значений

@@ -1,0 +1,5 @@
+url text text
+title text text
+type int select
+album_id int select
+date date date

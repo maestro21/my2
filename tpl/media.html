@@ -1,0 +1,38 @@
+<hr>
+<?php switch($do){ 
+
+	case 'view': ?>
+		<img src="<?=$data['url'];?>">
+		<modal>
+	<? break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Items list - default function	
+	case 'search' :
+	case 'items' : foreach ($data as $row){?> 
+		 <!--<a href="javascript:void(0)" style="margin:10px;" onclick="loadContent('<?=$pre.$class?>/view/<?=$row['id'];?>');">-->
+		 <a href="<?=$pre?>up/img/<?=$row['id'];?>.jpg" style="margin:10px;" rel="shadowbox['field_image']">
+			<img src="<?=$pre?>up/thumb/<?=$row['id'];?>" style="border:2px black solid;">
+		 </a> 
+
+	 <? }  	?>
+	<center>
+	<?php if($pages>1) for($i=1;$i<=$pages;$i++){ ?>
+		<a href="<?=$pre.$class?>/items/<?=$i;?>/<?=$search;?>" class="pagination"><?=$i;?></a>
+	<?}?>
+	</center>
+	
+	<?
+	break;
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	//Error
+	default : 
+		include('default.tpl.php'); /*?>	
+		<h2>404 <?=T('not found');?></h2>	
+<?php break; */
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+ } ?> 	

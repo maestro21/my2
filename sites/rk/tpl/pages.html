@@ -1,0 +1,10 @@
+<?php switch($do){ 
+	case 'view': ?>
+	<h2><?=$data['title'];?></h2>
+	<?=$data['text'];?>
+	<? break;
+	default:
+		include('default.html');
+	break;
+
+}?>

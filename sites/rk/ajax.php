@@ -1,0 +1,1 @@
+<?phpsession_start();include('config.php');if(@$_SESSION['lang']=='') $_SESSION['lang'] = 'en' ;include('langs/'.$_SESSION['lang'].'.php');if(function_exists(@$_POST['do'])){	$f = $_POST['do'];	$f();}else{	echo "false";}?>

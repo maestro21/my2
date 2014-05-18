@@ -1,0 +1,182 @@
+	<? $_S = $_SESSION['tag'];// inspect($tags); die();
+		$bg = (file_exists('img/themes/'.$_S['url'].'_bg.jpg')?BASE_PATH.'img/themes/'.$_S['url'].'_bg.jpg':BASE_PATH.'img/themes/rus_bg.jpg');
+	?>
+	<style>
+		h1, .theme{
+			color:<?=($_S['color']!=''?$_S['color']:'white');?>  !important;
+		}
+		
+		.bgcolor, .theme {
+			background-color:<?=($_S['bgcolor']!=''?$_S['bgcolor']:'black');?> !important;
+		}
+		
+	</style>
+	<img src="<?=$bg;?>" class="bg">
+	<center>
+	<div class="wrapper">
+		<div class="header">
+			<a href="<?=BASE_PATH;?>"><? if(file_exists('img/themes/'.$_S['url'].'_img.jpg')){ ?>
+				<img src="<?=BASE_PATH;?>img/themes/<?=$_S['url'];?>_img.jpg" align=left style="box-shadow:0 0 15px #111;">
+			<?}else{?>
+				<img src="<?=BASE_PATH;?>img/themes/rus_img.jpg" align=left style="box-shadow:0 0 15px #111;">
+			<? } ?>	
+			<h1 class="color">Русский Клуб</h1></a>
+			<div class="menu">
+			
+					<a href="#" class="theme" onclick="showHide('ru')">Список тем</a>
+				<div class="dropdownmenu"  id="ru">
+				<a href="#">ef</a>
+				</div>
+					<a href="#" class="theme">Русский мир</a>
+					
+					<a href="#" class="theme">Рубрики</a>
+				
+					<a href="#" class="theme">События</a>
+				
+					<a href="#" class="theme">Страны</a>
+				
+					<a href="#" class="theme">Медиа</a>	
+				
+					<a href="#" class="theme">Ссылки</a>	
+				
+			</div>
+		</div>
+	<div class="content">
+		<div  style="display:table-cell;width:160px;">
+				<h2>Повестка дня</h2><br>
+				<!--<table>
+				<tr>
+				<td style="width:150px;height:100px; background-image:url('smltags/libya.jpg');vertical-align:bottom;display:table-cell;border-radius:8px;">
+					<p style="background-image:url('transB.png');color:white;padding:5px;">Ливия</p>
+				</td>
+				</tr>
+				</table>-->
+				
+				<div class="theme" style="text-align:justify;font-size:14px;box-shadow:0 0 5px black;border-radius:10px;padding:0px !important;margin:0px !important;">
+				<a href="#" class="theme" style="text-decoration:none;">
+					<? if(file_exists('img/themes/'.$_S['url'].'_img.jpg')){ ?>
+						<img src="<?=BASE_PATH;?>/img/themes/<?=$_S['url'];?>_img.jpg" style="border-top-left-radius:10px;border-top-right-radius:10px;">
+					<? } ?>	
+					<p style="margin:10px;margin-top:5px;padding-bottom:10px;">Союз Советских Социалистических Республик</p>
+					</a>
+				</div>
+			</div>
+			<div style="display:table-cell;padding:21px;width:1000px;">
+<?php //echo $do;
+switch($do){ 
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	//Initialization - installation
+	case 'ini': echo T('ini_msg');
+	break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Items list - default function	
+	case 'tag':
+	case 'search':
+	case 'items' :  ?>
+
+	<?php  foreach ($data as $row){ $_id = $row['id']; unset($row['id']); ?>
+		<div class="subhdr">	
+			<div style="float:right;padding:4px;">
+				<?=fDate($row['date']);?>				
+				<a href="<?=$pre.$class?>/item/<?=$id;?>"><?=T('edit');?></a>	
+				<a href="#" onclick="conf('<?=$pre.$class?>/del/<?=$id;?>')"><?=T('del');?></a>
+			</div>
+		<center><h2><a href="<?=$pre.$class?>/view/<?=$_id;?>"><?=$row['label'];?></a></h2> </center>
+		</div>	
+		<p>
+			<?=$row['text'];?>
+		</p>		
+		<p class="tags"><i>Темы</i> <? $_tags = split(',',$row['tags']); foreach ($_tags as $tag){ ?>
+			<a href="<?=$pre.$class;?>/tag/<?=$tags[$tag]['url'];?>"><?=$tags[$tag]['name'];?></a><? } ?>
+		</p>
+		<hr>
+	<?}?> 
+
+		<center>
+	<?php if($pages>1) for($i=1;$i<=$pages;$i++){ ?>
+		<?if($do=='tag'){?>
+			<a href="<?=$pre.$class?>/tag/<?=$id;?>/<?=$i;?>" class="pagination"><?=$i;?></a>
+		<?}else{ ?>
+			<a href="<?=$pre.$class?>/<?=$do;?>/<?=$i;?>/<?=$search;?>" class="pagination"><?=$i;?></a>
+		<?}?>
+	<?}?>	
+	</center>
+	<?php break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Add\Edit  item
+	case 'item' : ?>
+		<form method="POST" action="<?=$pre.$class?>/save">
+		<input type="hidden" name="id" id="id" value="<?=$id;?>">
+			<table>
+			<?php   unset($data[0]); //inspect($data);  inspect($fields);
+				echo drawForm($fields,$data,$options); 
+			?>
+				<tr>
+					<td colspan="2">
+						<input type="submit">
+					</td>
+				</tr>
+			</table>	
+		</form>
+		<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">
+bkLib.onDomLoaded(function() {
+ new nicEditor({fullPanel : true,maxHeight : 300}).panelInstance('text');
+ });
+</script>
+						
+	<?php break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Save
+	case 'save' : echo T('save_msg'); redirect($pre.$class.'/item/'.$id,3);
+	break;
+		
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Delete
+	case 'del' : echo T('del_msg'); redirect($pre.$class.'/items',3);
+	break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	// View
+	case 'view' ://inspect($data); ?> 
+		<div style="width:80%;margin-left:10%;">
+			<div class="subhdr">	
+				<div style="float:right;padding:4px;">
+					<?=fDate($data['date']);?>
+				
+				</div>
+			<center><h2><?=$data['label'];?></h2> </center>
+			</div>	
+			<p>
+				<?=$data['text'];?>
+			</p>
+		</div>
+		 <?php
+	break;			
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	//Error
+	default : ?>	
+		<h2>404 <?=T('not found');?></h2>	
+<?php break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+ } ?> 	 </div>
+	</div>
+		<div class="footer">
+			&copy; Владелец 2011
+		</div>		
+	</div>
+	</center>

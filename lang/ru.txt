@@ -1,0 +1,180 @@
+mon_01 = янв.
+mon_02 = фев.
+mon_03 = мар.
+mon_04 = апр.
+mon_05 = мая
+mon_06 = июн.
+mon_07 = июл.
+mon_08 = авг.
+mon_09 = сент.
+mon_10 = окт.
+mon_11 = ноя.
+mon_12 = дек.
+tags=Темы
+Maestro=Маэстро
+title = Заголовок
+email=Email
+name=Имя
+abbr=Аббревиатура
+isactive=Активен
+pass=Пароль
+keep me logged=Запомнить меня
+forgot pass=Забыли пароль?
+name=Имя
+users=Пользователи
+globals=Переменные
+modules=Модули
+langs=Языки
+login=Вход
+ini=Установка
+filemanager=Файловый менеджер
+pages=Страницы
+add=Добавить
+list=Список
+del=Удалить
+edit=Редактировать
+view=Посмотреть
+setup=Настроить
+options=Опции
+save=Сохранить
+save_msg=Сохранено успешно!
+del_msg=Удалено успешно!
+syst_dirs=Системные папки
+dirs=Папки
+root=Корень
+classes=Классы
+img=Картинка
+lange=Языки
+tpl=Шаблоны
+themes=Темы
+labels=Метки
+exit=Выход
+settings=Настройки
+administration=Управление
+search=Поиск
+url=URL
+defrights=Разрешен по умолчанию
+defrights_allow=Разрешено по умолчанию
+defrights_deny=Запрещено по умолчанию
+lang=Языки
+yes=Да
+no=Нет
+superadmin=Суперадмин
+descr=Описание
+value=Значение
+isadmin=Администратор
+rights=Права
+path=Путь
+content=Содержимое
+register=Зарегистрироваться
+wrongLogin=Неверный логин или пароль
+alreadyRegistered=Пользователь с таким почтовым адресом уже существует
+passrecover=Восстановление пароля
+recover=Восстановить
+wrong mail=Неверный адрес электронной почты
+regSuccess=Успешно зарегистрировались!
+recoverSent=Новый пароль отправлен!
+new pass=Добрый день!<br>Вы воспользовались системой восстановления пароля. Ваш новый пароль:  
+
+mon_1 = янв.
+mon_2 = фев.
+mon_3 = мар.
+mon_4 = апр.
+mon_5 = мая
+mon_6 = июн.
+mon_7 = июл.
+mon_8 = авг.
+mon_9 = сент.
+mon_10 = окт.
+mon_11 = ноя.
+mon_12 = дек.
+
+title=Заголовок
+meta_descr=Maestro CMS engine - lightweight engine for web-development and content management
+
+ini = Установка
+list = Список
+add = Добавить
+search = Искать
+del = Уд.
+edit = Ред.
+view = Смотреть
+copy = Копировать
+rename = Переименовать
+items = Список
+all =Все
+	
+	   
+hi = Привет
+joinlogin=ВойтиРегистр.
+logout = Выйти	
+pass=Пароль
+reg = Регистарция
+submit=Вперед !
+email=Почта
+keep me logged = Сохранить пароль
+forgot pass = Восстановить пароль
+
+pages = Страницы
+url = URL
+text = Текст
+		
+users = Пользователи
+pass = Пароль
+isadmin = Админ
+rights = Права
+	  
+langs = Языки
+	   abbr = Аббревиатура
+	   name = Имя
+	   isactive = Активен
+	   labels = Метки
+
+	   links = Ссылки
+	   pid = Предок
+	   label = Название
+	   pos = Позиция
+	   date = Дата
+	   
+	   projects =Проекты
+	   created = Созданы
+
+	   tasks=Задания
+	   info =Информация
+	   status=Статус
+	   
+	   records = Записи
+
+	   globals = Переменные
+	   descr=описание
+	   value= Значение
+		
+	   blogs = Блоги
+	   
+	   modules= Модули
+	   defrights = Доступ<br>по умолчанию
+	   defrights_allow = Доступ к методам<br>по умолчанию
+	   defrights_deny = Запрещенные методы<br>по умолчанию
+	   setup = Установка
+	   fields = Поля
+	   
+
+	   filemanager = Файловый менеджер
+	   syst_dir = Системные папки
+	   dirs = Папки
+	   create dir = Создать папку
+	   path = Путь
+	   content = Содержимое
+	   
+	   save_msg=Сохранено успешно
+	   del_msg = Удалено успешно
+	   not found = Страница не найдена
+	   ini_msg = Установка завершена!
+	   fcopy = Скопированно успешно
+forums = Форумы
+Import link = Сохранить ссылку
+videos = Видео
+images = Картинки
+Tags = Темы
+su = CCCP
+girls = Девушки

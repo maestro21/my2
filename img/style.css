@@ -1,0 +1,27 @@
+body{
+	color:#000033;
+	font-family:arial;
+	font-size:14px;
+
+}
+
+a {
+	color:navy;
+	font-weight:bold;
+}
+
+hr{
+border:1px #cc0000 solid;
+}
+
+h1,h2,h3,h4,h5{
+	font-family:times;
+}
+
+h1{
+	padding:5px;
+}
+.subhdr, .subhdr a, #content h1, #content h1 a{
+	color:white !important;
+	background-color:#cc0000;
+}

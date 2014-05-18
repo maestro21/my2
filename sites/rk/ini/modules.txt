@@ -1,0 +1,5 @@
+url text text
+isactive int checkbox
+defrights int checkbox
+defrights_allow text text
+defrights_deny text text

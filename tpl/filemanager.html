@@ -1,0 +1,186 @@
+<?php switch($do){ 
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	//Initialization - installation
+	case 'ini': echo T('ini_msg');
+	break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Items list - default function	
+	case 'items' : //inspect($data); ?>
+	<form method="POST" id="copyForm" action="<?=$pre.$class?>/fcopy">
+		<input type="hidden" id="from" name="from">	
+		<input type="hidden" id="to" name="to">
+		<input type="hidden" id="del" name="del">
+	</form>	
+	<table>
+	<tr>
+	<td class="fm">
+		<b><?=T('syst_dirs');?></b>
+		<ul class="dirs">
+			<li><a href="<?=$pre.$class?>"><?=T('root');?></a></li>	
+			<? foreach ($data['system_dirs'] as $dir){ ?>
+				<li><a href="<?=$pre.$class?>/<?=$dir;?>"><?=T($dir);?></a></li>
+			<? } ?>
+		</ul>
+		<b><?=T('dirs');?></b>
+		<ul class="dirs">
+			<? foreach ($data['user_dirs'] as $dir){ ?>
+				<li><a href="<?=$pre.$class?>/<?=$dir;?>"><?=T($dir);?></a></li>
+			<? } ?>
+		</ul>
+	</td>
+	
+	
+	<td class="fm" style="width:500px !important;">
+		<table>
+		<tr><td>
+			<form enctype="multipart/form-data" action="<?=$pre.$class?>/upfile" style="float:right;" method="POST">
+			<input type="hidden" name="path" value="<?=$id;?>" />
+			<b><?=T('Upload');?></b>: <input name="file" type="file" />
+			<input type="submit" value="<?=T('Upload');?>" />
+			</form>
+		</div>
+		</td>
+		</tr>
+		<tr><td>
+		<b><?=T('Path');?></b> : <a href="<?=$pre.$class?>"><?=T('root');?></a>
+		<? $_p =$pre.$class; $_pp;
+			foreach($data['path'] as $p){ if($p!=''){$_p .= '/'.$p; ?>
+				&rarr; <a href="<?=$_p?>"><?=$p;?></a>
+		<?	} }?>
+		&rarr; <input id="newfile"></input> <button onclick="window.location='<?=$pre.$class?>/newdir/<?=$id;?>/'+$('newfile').value;"><?=T('create dir');?></button>
+		</td></tr>
+	
+</table>
+		<hr>
+		<!--<p><b><?=T('Directory content');?> : </b></p>-->
+		<ul class="dirs">
+			<? foreach ($data['dirs'] as $dir){ ?>
+				<li><a href="<?=$_p?>/<?=$dir;?>"><?=$dir;?></a> 
+				<a href="javascript:void(0);" onclick="conf('<?=$pre.$class?>/del/<?=$id?>/<?=$dir;?>')"><img src="<?=$pre;?>img/delete.gif" alt="<?=T('del');?>" title="<?=T('del');?>"></a>
+				<!--<a href="javascript:void(0);" onclick="copyFile('<?=$id?>/<?=$dir;?>',0)"><?=T('copy');?></a>-->
+				<a href="javascript:void(0);" onclick="copyFile('<?=$id?>/<?=$dir;?>',1)"><img src="<?=$pre;?>img/move.gif" alt="<?=T('move');?>" title="<?=T('move');?>"></a>				</li>
+			<? } ?>
+		</ul>
+		
+		<ul class="files">
+			<?  
+				foreach ($data['files'] as $file){
+							?>
+				<li><a href="<?=$_p?>/<?=$file;?>"><?=$file;?></a>
+				<a href="javascript:void(0);" onclick="conf('<?=$pre.$class?>/del/<?=$id?>/<?=$file;?>')"><img src="<?=$pre;?>/img/delete.gif" alt="<?=T('del');?>" title="<?=T('del');?>"></a>
+				<a href="javascript:void(0);" onclick="copyFile('<?=$id?>/<?=$file;?>',0)"><img src="<?=$pre;?>/img/copy.gif" alt="<?=T('copy');?>" title="<?=T('copy');?>"></a>
+				<a href="javascript:void(0);" onclick="copyFile('<?=$id?>/<?=$file;?>',1)"><img src="<?=$pre;?>/img/move.gif" alt="<?=T('move');?>" title="<?=T('move');?>"></a>
+				</li>
+			<? } ?>
+		</ul>
+	</td>
+	</tr>
+	</table>
+
+	
+		
+	<?php break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Add\Edit  item
+	case 'item' : ?>
+		<form method="POST" action="<?=$pre.$class?>/save" id="fileForm">
+		<input type="hidden" name="id" id="id" value="<?=$id;?>">
+			<table>
+			<?php   if(isset($data[0])) unset($data[0]); //inspect($data);  inspect($fields); inspect($options);
+				echo drawForm($fields,$data,$options); 
+			?>
+				<tr>
+					<td colspan="2">
+						<input type="submit">
+					</td>
+				</tr>
+			</table>	
+		</form><script language="javascript" type="text/javascript" src="<?=BASE_PATH;?>edit_area/edit_area_full.js"></script>
+				<script language="javascript">
+	editAreaLoader.init({
+			id: "content"	// id of the textarea to transform	
+			,start_highlight: true	
+			,font_size: "10"
+			,font_family: "verdana, monospace"
+			,allow_resize: "y"
+			,allow_toggle: false
+			,language: "ru"
+			,syntax: "php"	
+			,toolbar: "new_document, save, load, |, charmap, |, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help"
+			,plugins: "charmap"
+			,charmap_default: "utf-8"
+			,save_callback: "my_save"
+		});
+		ajax_request('<?=BASE_PATH;?>filemanager/getFile/<?=$id;?>','',iniForm); 
+		function iniForm(resp){ 
+			var res = resp.responseText;// alert(res);
+			editAreaLoader.setValue('content', res);	
+		}
+		function my_save(id,content){ //alert(content);
+			$('content').value= content; 
+			ajax_request('<?=BASE_PATH;?>filemanager/save',$('fileForm').serialize(),fileSaved);	
+			//alert(editAreaLoader.getCurrentFile(id).id);
+			//alert("Here is the content of the EditArea '"+ id +"' as received by the save callback function:\n"+content);
+		}	
+		function fileSaved(){/*alert('File saved');*/}
+		</script>
+	<?php break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Save
+	case 'save' : echo T('save_msg'); redirect($pre.$class.'/item/'.$id,3);
+	break;
+		
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Delete
+	case 'del' : echo T('del_msg'); goBack();//redirect($pre.$class.'/'.$id,3);
+	break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	// Copy or move
+	case 'fcopy' : echo T('fcopy'); goBack();//redirect($pre.$class.'/'.$id,3);
+	break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	// View
+	case 'view' :  ?> <table>
+		<?php foreach ($data as $k => $v){ ?>
+			<tr>
+				<td><?=T($k);?></td>
+				<td><?=(isset($options[$k])?T($options[$k][$v]):$v);?></td>		
+			</tr>	
+		<?php	
+		} ?>
+		</table> 
+
+		<?php
+	break;			
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+	
+	//New directory
+	case 'upfile' :
+	case 'newdir' : echo $data['msg'];	redirect($pre.$class.'/'.$id,3);
+
+		break;
+	
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+	//Error
+	default : ?>	
+		<h2>404 <?=T('not found');?></h2>	
+<?php break;
+
+	///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+ } ?> 	

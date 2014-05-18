@@ -1,0 +1,6 @@
+lang text select
+url text text
+title text text
+text text html
+pid int select
+order_id int hidden

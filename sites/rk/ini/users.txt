@@ -1,0 +1,5 @@
+login text text
+pass pass pass
+email text text
+isadmin int checkbox
+rights text multselect

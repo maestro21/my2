@@ -1,0 +1,136 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
+<script language="javascript" src="<?=BASE_PATH;?>ajax.js"></script>
+<script language="javascript"><?=stpl('functions.js');?></script>
+<title>Русский клуб - <?=$title;?></title>
+<LINK REL=StyleSheet HREF="<?=BASE_PATH;?>style.css" TYPE="text/css" MEDIA=screen>
+<link rel="icon" type="image/png" href="<?=BASE_PATH;?>img/icon.jpg">
+<link href="<?=$path;?>/themes/<?=G('theme');?>/style.css" type="text/css" rel="stylesheet" />
+<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<style>
+<?=str_replace('{path}',$path,G('css'));?>
+</style>
+</head>
+<body>
+	<? $_S = $_SESSION['tag']; 
+		$bg = (file_exists('img/themes/'.$_S['url'].'_bg.jpg')?BASE_PATH.'img/themes/'.$_S['url'].'_bg.jpg':BASE_PATH.'img/themes/rus_bg.jpg');
+	?>
+	<style>
+		h1, .theme{
+			color:<?=($_S['color']!=''?$_S['color']:'white');?>
+		}
+		
+		.bgcolor, .theme {
+			background-color:<?=($_S['bgcolor']!=''?$_S['bgcolor']:'black');?>
+		}
+		
+	</style>
+	<img src="<?=$bg;?>" class="bg">
+	<?php if(superAdmin()){ ?>	
+	<div class="adminbar"> 
+		<div class="wrap">
+			<div class="admdropdown" style="width:5%">
+				<a href="<?=$path;?>"><img src="<?=BASE_PATH;?>img/icon.jpg" style="border-radius:5px;"></a>
+			</div>
+			
+			<div class="admdropdown" style="width:10%">
+				<a onclick="showHide('mainmenu')" href="#"><img src="<?=$path;?>img/arr.png"> <?=T('modules');?></a>
+				<div class="dropdownmenu" id="mainmenu">
+				 <!--<a href="<?=$path;?>install.php"><?=T('install');?></a><br> -->
+				<?php foreach ($modules as $module){ ?>
+					<a href="<?=$path.$module;?>"><?=T(trim($module));?></a><br>
+				<?}?>
+				</div>
+			</div>
+						
+			<div class="admdropdown topmenu" style="width:55%">
+				&rarr; <a href="<?=$path.$class?>"><?=$title;?></a>
+					<?=$buttons;?>
+					<input type="text" id="search" name="search" value="<?=$search;?>">
+					<button class="btn search"  onclick="doSearch('<?=$path.$class?>')"><?=T('search');?></button>
+			</div>
+			
+			<div class="admdropdown" style="width:10%">
+				<a onclick="showHide('blogsmenu')" href="#"><img src="<?=$path;?>img/arr.png"> <?=T('blogs');?></a>
+				<div class="dropdownmenu" id="blogsmenu">
+				<a href="<?=BASE_PATH;?>records"><?=T('records');?></a><br>
+				<?php foreach ($blogs as $blog){ ?>
+					<a href="<?=$path.$blog['url'];?>"><?=T(trim($blog['name']));?></a><br>
+				<?}?>
+				</div>
+			</div>
+			
+			<div class="admdropdown" style="width:18%;">
+				<a href="#" onclick="showHide('dropdownmenu')"><img src="<?=BASE_PATH;?>img/arr.png" align="absmiddle"><?=(@$_SESSION['user']['name']!=''?$_SESSION['user']['name']:$_SESSION['user']['email']);?></a><br>
+				<div  class="dropdownmenu" id="dropdownmenu">
+					<a href="<?=BASE_PATH;?>users/logout"><?=T('exit');?></a><br>	
+					<?php foreach ($langs as $lang){ ?>
+						<a href="<?=$path;?>filter/lang/<?=$lang['abbr'];?>"><?=$lang['name'];?></a> <br>		
+					<?}?>
+				</div>
+			</div>
+			
+		</div>
+	</div>	
+	<? } ?>
+	<center>
+	<div class="wrapper">
+		<div class="header">
+			<a href="<?=BASE_PATH;?>"><? if(file_exists('img/themes/'.$_S['url'].'_img.jpg')){ ?>
+				<img src="<?=BASE_PATH;?>img/themes/<?=$_S['url'];?>_img.jpg" align=left style="box-shadow:0 0 15px #111;">
+			<?}else{?>
+				<img src="<?=BASE_PATH;?>img/themes/rus_img.jpg" align=left style="box-shadow:0 0 15px #111;">
+			<? } ?>	
+			<h1 class="color">Русский Клуб</h1></a>
+			<div class="menu">
+			
+					<a href="#" class="theme">Список тем</a>
+				
+					<a href="#" class="theme">Русский мир</a>
+					
+					<a href="#" class="theme">Рубрики</a>
+				
+					<a href="#" class="theme">События</a>
+				
+					<a href="#" class="theme">Страны</a>
+				
+					<a href="#" class="theme">Медиа</a>	
+				
+					<a href="#" class="theme">Ссылки</a>	
+				
+			</div>
+		</div>
+	<div class="content">
+		<div  style="display:table-cell;width:160px;">
+				<h2>Повестка дня</h2><br>
+				<!--<table>
+				<tr>
+				<td style="width:150px;height:100px; background-image:url('smltags/libya.jpg');vertical-align:bottom;display:table-cell;border-radius:8px;">
+					<p style="background-image:url('transB.png');color:white;padding:5px;">Ливия</p>
+				</td>
+				</tr>
+				</table>-->
+				
+				<div class="theme" style="text-align:justify;font-size:14px;box-shadow:0 0 5px black;border-radius:10px;padding:0px !important;margin:0px !important;">
+				<a href="#" class="theme" style="text-decoration:none;">
+					<? if(file_exists('img/themes/'.$_S['url'].'_img.jpg')){ ?>
+						<img src="<?=BASE_PATH;?>/img/themes/<?=$_S['url'];?>_img.jpg" style="border-top-left-radius:10px;border-top-right-radius:10px;">
+					<? } ?>	
+					<p style="margin:10px;margin-top:5px;padding-bottom:10px;">Союз Советских Социалистических Республик</p>
+					</a>
+				</div>
+			</div>
+			<div style="display:table-cell;padding:21px;width:1000px;">
+			<?=$content;?>
+	</div>
+	</div>
+		<div class="footer">
+			&copy; Владелец 2011
+		</div>		
+	</div>
+	</center>
+	
+
+</body>
+</html>
