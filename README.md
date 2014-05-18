@@ -26,3 +26,4 @@ Although it doesn't have significant difference from v1, it still has some:
 * instead of two huge administration parts it has small administration line on top of the site
 * ajax.php was created for handling AJAX requests
 * some useful functions has been implemented like Loadmodule.
+* ckeditor is used instead of edit_area
