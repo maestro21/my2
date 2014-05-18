@@ -5,7 +5,7 @@ Maestro Engine v2 is the version of engine I am currently developing starting fr
 * Links
 * Image gallery
 * Video
-* Forum
+* Forum  
 It also allows to parse URL via API. Use following script for it:
 ```js
 javascript:(function(){ var i = document.createElement("img"); var tags = prompt("Enter tags"); i.src = "http://YOURSITE/api_save.php?url="+encodeURIComponent(location.href) + "&tags="+tags; })();
