@@ -25,5 +25,8 @@ Difference from v1
 Although it doesn't have significant difference from v1, it still has some:
 * instead of two huge administration parts it has small administration line on top of the site
 * ajax.php was created for handling AJAX requests
-* some useful functions has been implemented like Loadmodule.
+* some useful functions has been implemented like Loadmodule
 * ckeditor is used instead of edit_area
+* 'classes' folder is renamed to 'modules'
+ 
+For detailed description of V1 please refer 'engine' repository.
